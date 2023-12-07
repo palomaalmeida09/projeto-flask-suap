@@ -58,7 +58,3 @@ def auth():
     session['suap_token'] = token
     return redirect(url_for('index'))
 
-@app.route('/boletim/authorized')
-def boletim(ano):
-    boletim = oauth.suap.get(f'v2/minhas-informações/boletim/{ano}/1/')
-    return render_template('boletim.html', boletim=boletim.json())

@@ -31,6 +31,13 @@ def index():
     else:
         return render_template('index.html')
 
+@app.route('/boletim')
+def boletim():
+    if 'suap_token' in session:
+        boletim = oauth.suap.post('v2/minhas-informacoes/boletim/2023/1')
+        return render_template('boletim.html', user_data=boletim.json())
+    else:
+        return render_template('index.html')
 
 @app.route('/login')
 def login():

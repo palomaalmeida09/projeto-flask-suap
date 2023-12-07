@@ -1,5 +1,29 @@
 {% extends 'base.html' %}
-{[nota_etapa_1][nota]}
-{[nota_etapa_2][nota]}
-{[nota_etapa_3][nota]}
-{[nota_etapa_4][nota]}
+
+{% block conteudo %}
+  <h1> {%block title %} Boletim Escolar {%e endblock %}</h1>
+
+  <table border="1">
+    <thead>
+        <tr>
+            <th>Disciplina</th>
+            <th>1° bimestre</th>
+            <th>2° bimestre</th>
+            <th>3° bimestre</th>
+            <th>4° bimestre</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for field in boltim.html %}
+        <tr>
+            <td><b>{{ field['disciplina'] }}</b></td>
+            <td>{{ field['nota_etapa_1']['nota'] }}</td>
+            <td>{{ field['nota_etapa_2']['nota'] }}</td>
+            <td>{{ field['nota_etapa_3']['nota'] }}</td>
+            <td>{{ field['nota_etapa_4']['nota'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  <P><a href="[{url_for('logout')}]">Logout</a></P>
+{% endblock %}

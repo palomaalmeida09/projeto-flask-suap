@@ -30,11 +30,14 @@ def index():
         return render_template('user.html', user_data=meus_dados.json())
     else:
         return render_template('index.html')
-
-@app.route('/boletim')
-def boletim():
+    
+@app.route('/boletim', defaults={'ano':'2023'}, methods=['get', 'post'])
+@app.route('/boletim/<ano>', methods=['get', 'post'])
+def boletim(ano):
     if 'suap_token' in session:
-        boletim = oauth.suap.post('v2/minhas-informacoes/boletim/2023/1')
+        if request.method == 'POST':
+            ano = request.form['ano']
+        boletim = oauth.suap.post(f'v2/minhas-informacoes/boletim/{ano}/1')
         return render_template('boletim.html', user_data=boletim.json())
     else:
         return render_template('index.html')
@@ -58,7 +61,3 @@ def auth():
     session['suap_token'] = token
     return redirect(url_for('index'))
 
-@app.route('/boletim/authorized')
-def boletim(ano):
-    boletim = oauth.suap.get(f'v2/minhas-informações/boletim/{ano}/1/')
-    return render_template('boletim.html', boletim=boletim.json())

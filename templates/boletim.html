@@ -1,9 +1,20 @@
 {% extends 'base.html' %}
 
-{% block conteudo %}
-  <h1> {%block title %} Boletim Escolar {%e endblock %}</h1>
+{% block content %}
+  <h1 style="text-align: center;"> {% block title %} Boletim Escolar {% endblock %}</h1>
 
-  <table border="1">
+  <form action="{{ url_for('boletim') }}" method="post">
+    <label for="ano">Escolha o ano do boletim:</label>
+    <select id="ano" name="ano">
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+    </select>
+    <input type="submit" value="Enviar">
+    </form>
+
+  <table class="table">
     <thead>
         <tr>
             <th>Disciplina</th>
@@ -14,7 +25,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for field in boltim.html %}
+        {% for field in user_data %}
         <tr>
             <td><b>{{ field['disciplina'] }}</b></td>
             <td>{{ field['nota_etapa_1']['nota'] }}</td>
@@ -25,5 +36,5 @@
         {% endfor %}
     </tbody>
   </table>
-  <P><a href="[{url_for('logout')}]">Logout</a></P>
+  <P style="text-align: center;"><a href="{{ url_for('logout') }}">Logout</a></P>
 {% endblock %}
